@@ -185,7 +185,7 @@
         </p>
         <div class="dargon">
             <span class="comment"># Notice how each one is separated with a comma ','</span><br/>
-            <span class="kw">fixed int</span> one, two, three = <span class="numeric">1, 2, 3</span><br/>
+            <span class="kw">fixed int</span> one, two, three = <span class="numeric">1</span>, <span class="numeric">2</span>, <span class="numeric">3</span><br/>
             <span class="kw">string</span> myName, <span class="kw">int</span> myAge = <span class="string">"Veronica"</span>, <span class="numeric">34</span>
         </div>
         <footer class="figure">Declare.dargon</footer>
@@ -197,12 +197,57 @@
             like so:
         </p>
         <div class="dargon">
-            <span class="kw">fixed int</span> one, two, three = <span class="kw">~</span><br/>
-            <span class="numeric tab">1,</span> <span class="kw">~</span><br/>
-            <span class="numeric tab">2,</span> <span class="kw">~</span><br/>
-            <span class="numeric tab">3</span><br/>
+            <span class="comment"># Equivalent to fixed string a, b, c = "a", "b", "c"</span><br/>
+            <span class="kw">fixed string</span> a, b, c = <span class="kw">~</span><br/>
+            <span class="string dtab">"a"</span>, <span class="kw">~</span><br/>
+            <span class="string dtab">"b"</span>, <span class="kw">~</span><br/>
+            <span class="string dtab">"c"</span><br/>
         </div>
         <footer class="figure">Declare.dargon</footer>
+    </div>
+
+    <div class="chapter">
+        <h2>Functions</h2>
+        <p>
+            <b>Functions</b> are blocks of code that take any number of 
+            inputs and produce any number of outputs. Dargon provides a 
+            few neat features, for example: any number of different outputs,
+            named output variables, and <b>first-class functions</b>.
+            In layman's terms, this means functions can be passed around, 
+            just like any other variable.
+        </p>
+        <p>
+            Create a file named "Functions.dargon" and let's explore 
+            what Dargon's functions look like with a basic example:
+        </p>
+        <div class="dargon">
+            <span class="kw">fun</span> square(<span class="kw">int</span> input -> <span class="kw">int</span>) {<br/>
+                <span class="dtab">-> (input * input)</span><br/>
+            }
+        </div>
+        <footer class="figure">Functions.dargon</footer>
+        <p>
+            The above code is a <b>function declaration</b>. It declares a 
+            function named "square" that takes 1 integer input, 
+            named "input", and returns an integer result, denoted by the 
+            arrow syntax. Anything to the left of the arrow are the inputs 
+            to the function, and anything to the right is its outputs. 
+            Then, the curly braces denote the <b>body</b> of the function
+            (i.e what the function <i>does</i>).
+            Since this function returns something, that is denoted 
+            with the arrow syntax as well, returning the input multiplied
+            with itself (the definition of squaring a number).
+        </p>
+        <p>
+            Let's test this function out:
+        </p>
+        <div class="dargon">
+            <span class="kw">fixed int</span> myNumber = <span class="numeric">8</span><br/>
+            <span class="kw">fixed int</span> sixtyFour = square(myNumber)<br/>
+            <span class="predef">assert</span>(sixtyFour == 64)<br/>
+            <span class="predef">print</span>(<span class="string">"8^2 = {sixtyFour}"</span>)
+        </div>
+        <footer class="figure">Functions.dargon</footer>
     </div>
 </body>
 </html>
