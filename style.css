@@ -1,8 +1,17 @@
-body {
+/* body {
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     background-color: snow;
     margin-left: 15%;
     margin-right: 15%;
 }
+
+pre {
+    word-wrap: break-word;
+    margin: 0;
+    margin-left: 15px;
+    color: #000;
+    font-size: 95%;
+} */
 
 .figure {
     font-size: 80%;
