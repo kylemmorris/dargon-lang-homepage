@@ -19,15 +19,12 @@
     <h2>Table of Contents</h2>
     <dl>
         <dt><a href="#intro">Introduction</a></dt>
-        <dt><a href="#types">Type System</a></dt>
-        <dt><a href="#comments">Comments</a></dt>
-        <dt><a href="#decl">Constants and Variables</a></dt>
-        <dt><a href="#">Introduction</a></dt>
+        <dt><a href="#lex">Lexical Structure</a></dt>
         <hr/>
         <!-- Introduction -->
         <h3 id="intro">Introduction</h3>
         <p>
-            Dargon is a statically-typed, imperitive, extendable 
+            Dargon is a statically-typed, imperitive, modular 
             programming language with a focus on expressiveness
             and safety. It compiles to an intermediate language (IL) which
             runs on a stack-based virtual machine called the Dargon 
@@ -35,8 +32,41 @@
             modern programming language design, including some aspects of 
             object-oriented, functional, and scripting languages.
         </p>
+        <p>
+            By <b>statically-typed</b>, we mean that every variable's type is
+            known at compile time (when it's converted to IL). This is a 
+            crucial part of Dargon's design - all variables must have a 
+            type annotation associated with it. Coupled with this is the
+            fact that Dargon is <b>strongly-typed</b>, meaning there is
+            a robust type system.
+        </p>
+        <p>
+            By <b>imperitive</b>, we mean that a Dargon program consists of
+            <i>statements</i> which change the program's state. It is a 
+            mix of <b>procedural</b> programming, for its simplicity, and
+            <b>object-oriented</b> programming, for its valuable role in
+            expressing abstract ideas. However, Dargon does not force you
+            into any one particular paradigm like other languages. We 
+            believe some paradigms are better for certain problems.
+        </p>
+        <p>
+            By <b>modular</b>, we mean Dargon supports modularity in its
+            build system. People can create Dargon modules (called libraries,
+            or dlibs) that other people can then use without having to do
+            any strenuous labor.
+        </p>
         <!-- Type System -->
-        <h3 id="types">Type System</h3>
+        <h3 id="lex">Lexical Structure</h3>
+        A Dargon source file (ending in *.dargon), is a sequence of ASCII
+        characters. The DVM tokenizes this sequence using the following
+        constructs.
+        <h4>Whitespace</h4>
+        <h4>Comments</h4>
+        <h4>Whitespace</h4>
+        <h4>Identifiers</h4>
+        <h4>Literals</h4>
+        <h4>Keywords</h4>
+        <h4>Operators</h4>
     </dl>
 </body>
 </html>
