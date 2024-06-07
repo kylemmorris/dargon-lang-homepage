@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
     <link rel="stylesheet" href="https://newcss.net/theme/night.css">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
     <h1>Dargon Language Specification (alpha)</h1>
@@ -20,6 +20,13 @@
     <dl>
         <dt><a href="#intro">Introduction</a></dt>
         <dt><a href="#lex">Lexical Structure</a></dt>
+        <dd><a href="#whitespace">Whitespace</a></dd>
+        <dd><a href="#comments">Comments</a></dd>
+        <dd><a href="#identifiers">Identifiers</a></dd>
+        <dd><a href="#literals">Literals</a></dd>
+        <dd><a href="#keywords">Keywords</a></dd>
+        <dd><a href="#operators">Operators</a></dd>
+    </dl>
         <hr/>
         <!-- Introduction -->
         <h3 id="intro">Introduction</h3>
@@ -57,16 +64,249 @@
         </p>
         <!-- Type System -->
         <h3 id="lex">Lexical Structure</h3>
-        A Dargon source file (ending in *.dargon), is a sequence of ASCII
-        characters. The DVM tokenizes this sequence using the following
-        constructs.
-        <h4>Whitespace</h4>
-        <h4>Comments</h4>
-        <h4>Whitespace</h4>
-        <h4>Identifiers</h4>
-        <h4>Literals</h4>
-        <h4>Keywords</h4>
-        <h4>Operators</h4>
-    </dl>
+        A Dargon source file (ending in *.dargon), is a sequence of Unicode
+        characters that the Dargon Interpreter (DIR) tokenizes  and passes 
+        to the parser.
+        <h4 id="whitespace">Whitespace</h4>
+        <p>
+            Whitespace consists of characters discarded by DIR during 
+            tokenization. The following characters are whitespace: 
+            <i>space (\s)</i>, <i>tab (\t)</i>, and <i>form feed (\f)</i>. 
+        </p>
+        <h4 id="comments">Comments</h4>
+        <p>
+            Comments are designated areas ignored by DIR. There are four
+            types of comments: 
+            <ul>
+                <li>An <i>end-of-line comment</i> starts with the 
+                pound sign (#) and extends until the next line-terminating
+                character.</li>
+                <li>An <i>end-of-line todo comment</i> starts with the
+                pound sign (#) followed by the exclamation point (!).
+                These are treated like normal comments, except when 
+                DIR is in "TODO mode", in which case it will look only
+                for todo-style comments and report them to the user.
+                </li>
+                <li>A <i>multi-line comment</i> begins with <b>(#</b> and
+                end with <b>#)</b>.</li>
+                <li>A <i>multi-line todo comment</i> begins with 
+                <b>(#!</b> and ends with <b>#)</b>. It exhibits similar
+                behavior like end-of-line todo comment.</li>
+            </ul>
+        </p>
+<pre>
+<span class="comment"># This is an end-of-line comment</span>
+<span class="todo-comment">#! This is an end-of-line todo comment, and will be reported by DIR.</span>
+<span class="comment">
+(#
+This comment can
+extend as many lines as
+I would like.
+#)
+</span><span class="todo-comment">
+(#!
+This comment can
+extend as many lines as
+I would like.
+#)</span></pre>
+        <h4 id="identifiers">Identifiers</h4>
+        <p>
+            Identifiers can be used to represent variables, functions, and
+            other programming constructs. They can start with either an 
+            alphabetical character, or an underscore. After this first 
+            character, they can contain any combination of alphanumeric 
+            characters and underscores. An identifier <b>cannot</b> be
+            the same as one of the keywords, or <i>reserved words</i>
+            described in the a later section. 
+            The following is an example of legal identifiers:
+        </p>
+        <ul>
+            <li>m_state</li>
+            <li>_99Bottles</li>
+            <li>temp</li>
+            <li>GeographicPoint</li>
+            <li>Snake_Case_</li>
+        </ul>
+        <h4 id="literals">Literals</h4>
+        <h4 id="keywords">Keywords</h4>
+        <p>
+            The following table describes the list of keywords, or
+            <i>reserved words</i> that hold special meaning to Dargon:
+            <table>
+                <caption>
+                  Dargon Reserved Word List
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Keyword</th>
+                    <th scope="col">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>var</th>
+                        <td>Annotates a variable as opposed to a constant.
+                            Also a parameter decorator.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>fun</th>
+                        <td>Beginning of a function declaration, type
+                            specification, or lambda statement.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>if</th>
+                        <td>Beginning of an <i>if statement</i>.</td>
+                    </tr>
+                    <tr>
+                        <th>else</th>
+                        <td>Beginning of an <i>else statement</i> 
+                        or an <i>if-else statement</i>.</td>
+                    </tr>
+                    <tr>
+                        <th>when</th>
+                        <td>Beginning of a <i>pattern matching</i>
+                        statement.</td>
+                    </tr>
+                    <tr>
+                        <th>is</th>
+                        <td>The <i>type-checking</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>as</th>
+                        <td>The <i>type-casting</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>loop</th>
+                        <td>Beginning of a <i>loop</i> statement.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>continue</th>
+                        <td>The <i>continue</i> statement will
+                        force a loop to continue without
+                        a full iteration.</td>
+                    </tr>
+                    <tr>
+                        <th>stop</th>
+                        <td>The <i>stop</i> statement will forcably stop
+                        a loop or function.</td>
+                    </tr>
+                    <tr>
+                        <th>in</th>
+                        <td>The <i>membership</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>module</th>
+                        <td>Beginning of a module declaration.</td>
+                    </tr>
+                    <tr>
+                        <th>defer</th>
+                        <td>Defers a statement(s) until scope end
+                            regardless of state.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>with</th>
+                        <td>A closure list.</td>
+                    </tr>
+                    <tr>
+                        <th>use</th>
+                        <td>Beginning of a <i>module inclusion</i> 
+                            statement.</td>
+                    </tr>
+                    <tr>
+                        <th>int</th>
+                        <td>Denotes the integer type.</td>
+                    </tr>
+                    <tr>
+                        <th>real</th>
+                        <td>Denotes the real number type.</td>
+                    </tr>
+                    <tr>
+                        <th>bool</th>
+                        <td>Denotes the boolean type.</td>
+                    </tr>
+                    <tr>
+                        <th>string</th>
+                        <td>Denotes the string type.</td>
+                    </tr>
+                    <tr>
+                        <th>byte</th>
+                        <td>Denotes the byte type.</td>
+                    </tr>
+                    <tr>
+                        <th>char</th>
+                        <td>Denotes the character type.</td>
+                    </tr>
+                    <tr>
+                        <th>and</th>
+                        <td>The logical <i>and</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>or</th>
+                        <td>The logical <i>or</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>nor</th>
+                        <td>The logical <i>nor</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>xor</th>
+                        <td>The logical <i>xor</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>type</th>
+                        <td>Beginning of a type declaration.</td>
+                    </tr>
+                    <tr>
+                        <th>pattern</th>
+                        <td>Beginning of a pattern declaration.</td>
+                    </tr>
+                    <tr>
+                        <th>public</th>
+                        <td>Annotates a type member as <i>public</i>.</td>
+                    </tr>
+                    <tr>
+                        <th>private</th>
+                        <td>Annotates a type member as <i>private</i>.</td>
+                    </tr>
+                    <tr>
+                        <th>limited</th>
+                        <td>Annotates a type member as <i>limited</i>.</td>
+                    </tr>
+                    <tr>
+                        <th>protected</th>
+                        <td>Annotates a type member as <i>protected</i>.</td>
+                    </tr>
+                    <tr>
+                        <th>try</th>
+                        <td>Beginning of a <i>try-handle</i> statement.</td>
+                    </tr>
+                    <tr>
+                        <th>handle</th>
+                        <td>Latter part of the <i>try-handle</i>
+                            statement.</td>
+                    </tr>
+                    <tr>
+                        <th>throws</th>
+                        <td>Annotates a function as capable of 
+                            throwing an error.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>throw</th>
+                        <td>The <i>throw</i> operator.</td>
+                    </tr>
+                    <tr>
+                        <th>vm</th>
+                        <td>Begins a scope for directly-imbedded IR.</td>
+                    </tr>
+                </tbody>
+              </table>
+              
+        </p>
+        <h4 id="operators">Operators</h4>
 </body>
 </html>
